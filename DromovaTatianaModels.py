@@ -11,17 +11,17 @@ class Model:
     def __init__(self, data: pd.DataFrame, target: pd.DataFrame, predict: pd.DataFrame):
         self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(data, target['target'], test_size=0.2)
         self.to_predict = predict
-        self.model = None
+        self.name_model = None
         self.name: Optional[str] = None
 
     def fit(self):
-        self.model.fit(self.x_train, self.y_train)
-        prediction = self.model.predict(self.x_test)
+        self.name_model.fit(self.x_train, self.y_train)
+        prediction = self.name_model.predict(self.x_test)
         score = roc_auc_score(self.y_test, prediction)
         print("%s: %.2f%%" % (self.name, score * 100.0))
 
     def predict(self) -> pd.DataFrame:
-        return self.model.predict_proba(self.to_predict)
+        return self.name_model.predict_proba(self.to_predict)
 
 
 class Xgboost(Model):
